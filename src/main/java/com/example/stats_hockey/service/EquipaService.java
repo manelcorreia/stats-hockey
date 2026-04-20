@@ -1,6 +1,8 @@
 package com.example.stats_hockey.service;
 
 import com.example.stats_hockey.model.Equipa;
+import com.example.stats_hockey.model.EquipaDuplicadaException;
+import com.example.stats_hockey.model.NaoExisteEquipaException;
 import com.example.stats_hockey.repository.EquipaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +16,10 @@ import java.util.List;
 public class EquipaService {
     private final EquipaRepository equipaRepository;
 
-    public void adicionarEquipa(Equipa equipa) {
+    public void adicionarEquipa(Equipa equipa) throws EquipaDuplicadaException {
         if (equipaRepository.existsById(equipa.getNome())) {
             log.warn("Tentativa de criar equipa duplicada: {}", equipa.getNome());
-            return;
+            throw new EquipaDuplicadaException("Erro: Tentativa de criar equipa duplicada.");
         }
         equipaRepository.save(equipa);
         log.info("Equipa '{}' guardada com sucesso na base de dados.", equipa.getNome());
@@ -28,12 +30,13 @@ public class EquipaService {
         return equipaRepository.findAll();
     }
 
-    public void removerEquipa(String nome) {
+    public void removerEquipa(String nome) throws NaoExisteEquipaException {
         if (equipaRepository.existsById(nome)) {
             equipaRepository.deleteById(nome);
             log.info("Equipa '{}' removida com sucesso.", nome);
         } else {
             log.error("Falha ao remover: Equipa '{}' não encontrada.", nome);
+            throw new NaoExisteEquipaException("Erro: Não existe equipa com esses dados.");
         }
     }
 }

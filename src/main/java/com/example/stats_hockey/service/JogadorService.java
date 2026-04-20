@@ -16,10 +16,10 @@ public class JogadorService {
         this.jogadorRepository = jogadorRepository;
     }
 
-    public void adicionarJogador(Jogador j) {
+    public void adicionarJogador(Jogador j) throws JogadorDuplicadoException {
         if (jogadorRepository.existsById(j.getId())) {
             log.warn("Tentativa de criar jogador duplicado.");
-            return;
+            throw new JogadorDuplicadoException("Erro: Jogador duplicado.");
         }
         jogadorRepository.save(j);
         log.info("Jogador {} adicionado à equipa {} com sucesso", j.getNome(), j.getEquipa_Nome());
@@ -30,12 +30,13 @@ public class JogadorService {
         return jogadorRepository.findAll();
     }
 
-    public void removerJogador(Long id) {
+    public void removerJogador(Long id) throws NaoExisteJogadorException {
         if (jogadorRepository.existsById(id)) {
             log.info("A remover jogador...");
             jogadorRepository.deleteById(id);
         } else {
             log.error("Erro: Não foi encontrado nenhum jogador com esse id.");
+            throw new NaoExisteJogadorException("Erro: Não existe jogador com esses dados.");
         }
     }
 }
