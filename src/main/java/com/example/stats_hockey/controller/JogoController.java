@@ -24,4 +24,9 @@ public class JogoController {
     public void salvarJogo(@RequestBody Jogo j) {
         jogoService.salvarJogo(j);
     }
+
+    @GetMapping("/jornada/{numero}")
+    public List<Jogo> mostrarJogosJornada(@PathVariable int numero) {
+        return jogoService.mostrarJogosJornada(numero);
+    }
 }

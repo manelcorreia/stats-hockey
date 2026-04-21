@@ -16,7 +16,7 @@ import java.util.List;
 public class EquipaService {
     private final EquipaRepository equipaRepository;
 
-    public void adicionarEquipa(Equipa equipa) throws EquipaDuplicadaException {
+    public void adicionarEquipa(Equipa equipa) {
         if (equipaRepository.existsById(equipa.getNome())) {
             log.warn("Tentativa de criar equipa duplicada: {}", equipa.getNome());
             throw new EquipaDuplicadaException("Erro: Tentativa de criar equipa duplicada.");
@@ -30,7 +30,7 @@ public class EquipaService {
         return equipaRepository.findAll();
     }
 
-    public void removerEquipa(String nome) throws NaoExisteEquipaException {
+    public void removerEquipa(String nome) {
         if (equipaRepository.existsById(nome)) {
             equipaRepository.deleteById(nome);
             log.info("Equipa '{}' removida com sucesso.", nome);
@@ -38,5 +38,10 @@ public class EquipaService {
             log.error("Falha ao remover: Equipa '{}' não encontrada.", nome);
             throw new NaoExisteEquipaException("Erro: Não existe equipa com esses dados.");
         }
+    }
+
+    public Equipa procurarEquipa(String nomeEquipa) {
+        return equipaRepository.findById(nomeEquipa)
+                .orElseThrow(() -> new NaoExisteEquipaException("Erro: não existe equipa com esse nome."));
     }
 }

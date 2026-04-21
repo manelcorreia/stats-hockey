@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class JogadorDuplicadoException extends Exception {
+public class JogadorDuplicadoException extends RuntimeException {
     public JogadorDuplicadoException(String message) {
         super(message);
     }

@@ -1,6 +1,8 @@
 package com.example.stats_hockey.controller;
 
 import com.example.stats_hockey.model.Jogador;
+import com.example.stats_hockey.model.JogadorDuplicadoException;
+import com.example.stats_hockey.model.NaoExisteJogadorException;
 import com.example.stats_hockey.service.JogadorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +23,22 @@ public class JogadorController {
     }
 
     @PostMapping
-    public void adicionarJogador(@RequestBody Jogador j) {
+    public void adicionarJogador(@RequestBody Jogador j) throws JogadorDuplicadoException {
         jogadorService.adicionarJogador(j);
     }
 
-    @DeleteMapping("/{id}")
-    public void removerJogador(@PathVariable Long id) {
+    @DeleteMapping("/{id}-apagar")
+    public void removerJogador(@PathVariable Long id) throws NaoExisteJogadorException {
         jogadorService.removerJogador(id);
+    }
+
+    @GetMapping("/{id}")
+    public Jogador procurarJogador(@PathVariable Long id) {
+        return jogadorService.procurarJogador(id);
+    }
+
+    @GetMapping("/{equipaNome}/jogadores")
+    public List<Jogador> procurarJogadores(@PathVariable String equipaNome) {
+        return jogadorService.procurarJogadoresEquipa(equipaNome);
     }
 }

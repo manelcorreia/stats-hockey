@@ -24,4 +24,8 @@ public class JogoService {
     public List<Jogo> listarTodos() {
         return jogoRepository.findAll();
     }
+
+    public List<Jogo> mostrarJogosJornada(int jornada) {
+        return jogoRepository.findByJornada(jornada);
+    }
 }
