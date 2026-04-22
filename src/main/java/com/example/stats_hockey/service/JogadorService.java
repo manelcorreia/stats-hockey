@@ -48,4 +48,12 @@ public class JogadorService {
     public List<Jogador> procurarJogadoresEquipa(String equipaNome) {
         return jogadorRepository.findByEquipaNome(equipaNome);
     }
+
+    public List<Jogador> melhoresMarcadores() {
+        return jogadorRepository.findByOrderByGolosMarcadosDesc();
+    }
+
+    public List<Jogador> melhoresAssistentes() {
+        return jogadorRepository.findByOrderByAssistenciasDesc();
+    }
 }

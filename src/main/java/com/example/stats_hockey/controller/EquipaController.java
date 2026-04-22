@@ -42,4 +42,21 @@ public class EquipaController {
     public Equipa procurarEquipa(@PathVariable String nomeEquipa) {
         return equipaService.procurarEquipa(nomeEquipa);
     }
+
+    // ver classificação
+    @GetMapping("/classificacao")
+    public List<Equipa> classificacao() {
+        return equipaService.verClassificacao();
+    }
+
+    // classificacao golos marcados
+    @GetMapping("/classificacao/golos-marcados")
+    public List<Equipa> classificacaoGolosMarcados() {
+        return equipaService.classificacaoPorGolosMarcados();
+    }
+
+    @GetMapping("/classificacao/golos-sofridos")
+    public List<Equipa> classificacaoGolosSofridos() {
+        return equipaService.classificacaoGolosSofridos();
+    }
 }

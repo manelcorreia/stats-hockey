@@ -44,4 +44,16 @@ public class EquipaService {
         return equipaRepository.findById(nomeEquipa)
                 .orElseThrow(() -> new NaoExisteEquipaException("Erro: não existe equipa com esse nome."));
     }
+
+    public List<Equipa> verClassificacao() {
+        return equipaRepository.findAllByOrderByPontosDesc();
+    }
+
+    public List<Equipa> classificacaoPorGolosMarcados() {
+        return equipaRepository.findAllByOrderByGolosMarcadosDesc();
+    }
+
+    public List<Equipa> classificacaoGolosSofridos() {
+        return equipaRepository.findAllByOrderGolosSofridosDesc();
+    }
 }

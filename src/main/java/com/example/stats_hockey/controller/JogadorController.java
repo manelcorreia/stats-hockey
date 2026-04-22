@@ -41,4 +41,14 @@ public class JogadorController {
     public List<Jogador> procurarJogadores(@PathVariable String equipaNome) {
         return jogadorService.procurarJogadoresEquipa(equipaNome);
     }
+
+    @GetMapping("/lista-melhores-marcadores")
+    public List<Jogador> listaMelhoresMarcadores() {
+        return jogadorService.melhoresMarcadores();
+    }
+
+    @GetMapping("/lista-melhores-assistentes")
+    public List<Jogador> listaMelhoresAssistentes() {
+        return jogadorService.melhoresAssistentes();
+    }
 }
